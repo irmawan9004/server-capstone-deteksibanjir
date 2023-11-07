@@ -5,20 +5,21 @@ import {
   PenjagaLogin,
   LogOut,
 } from "../controller/Penjaga";
-import { getAllKondisiAir } from "../controller/kondisiAir";
+import { Hello, getAllKondisiAir } from "../controller/kondisiAir";
 import { verifyToken } from "../middleware/verifyToken";
 import { RefreshToken } from "../controller/refreshToken";
 
 const router = express.Router();
 
 //LOGIN,LOGOUT,REGISTER PENJAGA
-router.get("/", verifyToken, getAllPenjaga);
-router.post("/", RegisterPenjaga);
-router.post("/login", PenjagaLogin);
-router.get("/token", RefreshToken);
-router.delete("/logout", LogOut);
+router.get("/api", verifyToken, getAllPenjaga);
+router.post("/api", RegisterPenjaga);
+router.post("/api/login", PenjagaLogin);
+router.get("/api/token", RefreshToken);
+router.delete("/api/logout", LogOut);
 
 //KONDISI AIR
-router.get("/kondisiair", getAllKondisiAir);
+router.get("/api/kondisiair", getAllKondisiAir);
+router.get("/", Hello);
 
 export default router;

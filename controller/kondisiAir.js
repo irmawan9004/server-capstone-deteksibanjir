@@ -36,3 +36,8 @@ export const getAllKondisiAir = async (req, res) => {
     console.log(error);
   }
 };
+
+export const Hello = (req, res) => {
+  console.log("hello");
+  res.json({ msg: "hello" });
+};
