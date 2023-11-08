@@ -5,6 +5,13 @@ import cookieParser from "cookie-parser";
 import router from "./routes/index.js";
 import cors from "cors";
 
+// const express = require("express");
+// const dotenv = require("dotenv");
+// const db = require("./config/connection");
+// const cookieParser = require("cookie-parser");
+// const router = require("./routes/index");
+// const cors = require("cors");
+
 dotenv.config();
 const app = express();
 
