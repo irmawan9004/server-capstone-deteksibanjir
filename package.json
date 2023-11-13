@@ -6,10 +6,13 @@
   "type": "module",
   "scripts": {
     "start": "node --experimental-modules --es-module-specifier-resolution=node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "webpack "
+    "test": "echo \"Error: no test specified\" && exit 1"
 
   },
+  "engines": {
+    "node": "16.x"
+  },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -28,4 +31,7 @@
     "sequelize": "^6.33.0",
     "serverless-http": "^3.2.0"
   }
+  
 }
+
+
