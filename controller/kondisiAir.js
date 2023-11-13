@@ -1,5 +1,6 @@
 import kondisiAir from "../model/kondisiAirModel";
 import { Op } from "sequelize";
+import Sequelize from "sequelize";
 
 export const getAllKondisiAir = async (req, res) => {
   try {
@@ -10,14 +11,22 @@ export const getAllKondisiAir = async (req, res) => {
     const offset = limit * page;
     const totalRows = await kondisiAir.count({
       where: {
-        [Op.or]: [{ tinggi: { [Op.like]: `%${search}%` } }],
+        [Op.or]: [
+          Sequelize.literal(
+            `DATE_FORMAT(waktu, '%Y-%m-%d') LIKE '%${search}%'`
+          ),
+        ],
         // [Op.or]: [{ waktu: { [Op.like]: `%${search}%` } }],
       },
     });
     const totalPage = Math.ceil(totalRows / limit);
     const result = await kondisiAir.findAll({
       where: {
-        [Op.or]: [{ tinggi: { [Op.like]: `%${search}%` } }],
+        [Op.or]: [
+          Sequelize.literal(
+            `DATE_FORMAT(waktu, '%Y-%m-%d') LIKE '%${search}%'`
+          ),
+        ],
         // [Op.or]: [{ waktu: { [Op.like]: `%${search}%` } }],
       },
       offset: offset,

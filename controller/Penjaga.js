@@ -47,7 +47,7 @@ export const PenjagaLogin = async (req, res) => {
     // console.log(req.body.password);
     // console.log(penjaga[0].password);
     if (!match) {
-      return res.status(400).json({ msg: "Password salah" });
+      return res.status(401).json({ msg: "Password salah" });
     }
     const userId = penjaga[0].id;
     const name = penjaga[0].name;
@@ -55,12 +55,12 @@ export const PenjagaLogin = async (req, res) => {
     const accessToken = jwt.sign(
       { userId, name, email },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15s" }
+      { expiresIn: "1d" }
     );
     const refreshToken = jwt.sign(
       { userId, name, email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" }
     );
     console.log(refreshToken);
     console.log("hello");
@@ -76,7 +76,7 @@ export const PenjagaLogin = async (req, res) => {
     // console.log(refreshToken);
     res.json({ accessToken: accessToken });
   } catch (error) {
-    res.status(404).json({ msg: "email tidak ditemukan" });
+    res.status(401).json({ msg: "email tidak ditemukan" });
   }
 };
 

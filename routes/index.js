@@ -13,7 +13,7 @@ const router = express.Router();
 
 //LOGIN,LOGOUT,REGISTER PENJAGA
 router.get("/api", verifyToken, getAllPenjaga);
-router.post("/api", RegisterPenjaga);
+router.post("/api/regist", RegisterPenjaga);
 router.post("/api/login", PenjagaLogin);
 router.get("/api/token", RefreshToken);
 router.delete("/api/logout", LogOut);
