@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "react-scripts start",
     "start": "serve -s build",
-    "build" : "react script build",
     "test": "react script test --env=jsdom",
     "eject": "react script eject",
     "heroku-postbuild": "npm run build"
