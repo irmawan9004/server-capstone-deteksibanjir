@@ -4,13 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "test": "react script test --env=jsdom",
-    "eject": "react script eject",
-    "heroku-postbuild": "npm run build"
-  },
+"scripts": { "dev": "react-scripts start", "start": "serve -s build","build": "react-scripts build", "test": "react-scripts test --env=jsdom", "eject": "react-scripts eject", "heroku-postbuild": "npm run build"},
   "keywords": [],
   "author": "",
   "license": "ISC",
