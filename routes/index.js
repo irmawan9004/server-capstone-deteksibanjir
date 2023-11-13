@@ -7,11 +7,10 @@ import {
 } from "../controller/Penjaga";
 import { Hello, getAllKondisiAir } from "../controller/kondisiAir";
 import { verifyToken } from "../middleware/verifyToken";
-import { RefreshToken } from "../controller/refreshToken";
+import { RefreshToken } from "../controller/RefreshToken";
 
 const router = express.Router();
 
-//LOGIN,LOGOUT,REGISTER PENJAGA
 router.get("/api", verifyToken, getAllPenjaga);
 router.post("/api/regist", RegisterPenjaga);
 router.post("/api/login", PenjagaLogin);
