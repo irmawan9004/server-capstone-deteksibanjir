@@ -5,13 +5,6 @@ import cookieParser from "cookie-parser";
 import router from "./routes/index.js";
 import cors from "cors";
 
-// const express = require("express");
-// const dotenv = require("dotenv");
-// const db = require("./config/connection");
-// const cookieParser = require("cookie-parser");
-// const router = require("./routes/index");
-// const cors = require("cors");
-
 dotenv.config();
 const app = express();
 
@@ -28,6 +21,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(router);
 
-app.listen(process.env.PORT, () => {
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
   console.log("Server running on port 5000");
 });
