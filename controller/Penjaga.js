@@ -1,6 +1,7 @@
 import Penjaga from "../model/penjagaModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 
 export const getAllPenjaga = async (req, res) => {
   try {
@@ -93,4 +94,53 @@ export const LogOut = async (req, res) => {
   await Penjaga.update({ refresh_token: null }, { where: { id: userId } });
   res.clearCookie("refreshToken");
   return res.sendStatus(200);
+};
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    // Find the user by email (replace with your user lookup logic)
+    const penjaga = await Penjaga.findAll({ where: { email: email } });
+    console.log(email);
+    console.log(penjaga);
+    if (penjaga) {
+      // Create a JWT with the user's email
+      const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "capstonekelompok17@gmail.com",
+          pass: "bismillahkelar",
+        },
+      });
+
+      // Send magic link email
+      function sendMagicLinkEmail(email, token) {
+        const mailOptions = {
+          from: "capstonekelompok17@gmail.com",
+          to: email,
+          subject: "Magic Link for Password Reset",
+          text: `Click the following link to reset your password: http://localhost:8000/reset-password/${token}`,
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        });
+      }
+      // Send the magic link email
+      sendMagicLinkEmail(email, token);
+
+      res.json({ success: true, message: "Magic link sent to your email." });
+    } else {
+      res.status(403).json({ success: false, message: "User not found." });
+    }
+  } catch (error) {
+    res.status(401).json({ msg: "Error" });
+  }
 };

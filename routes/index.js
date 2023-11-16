@@ -4,6 +4,7 @@ import {
   RegisterPenjaga,
   PenjagaLogin,
   LogOut,
+  forgotPassword,
 } from "../controller/Penjaga";
 import { Hello, getAllKondisiAir } from "../controller/kondisiAir";
 import { verifyToken } from "../middleware/verifyToken";
@@ -12,9 +13,10 @@ import { RefreshToken } from "../controller/RefreshToken";
 const router = express.Router();
 
 router.get("/api", verifyToken, getAllPenjaga);
+router.get("/api/token", RefreshToken);
 router.post("/api/regist", RegisterPenjaga);
 router.post("/api/login", PenjagaLogin);
-router.get("/api/token", RefreshToken);
+router.post("/api/forgot-password", forgotPassword);
 router.delete("/api/logout", LogOut);
 
 //KONDISI AIR
