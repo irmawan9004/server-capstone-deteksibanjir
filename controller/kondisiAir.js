@@ -6,7 +6,7 @@ export const getAllKondisiAir = async (req, res) => {
   try {
     const status = req.query.status;
     const page = parseInt(req.query.page) || 0;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 60;
     const search = req.query.search_query || "";
     const offset = limit * page;
     const totalRows = await kondisiAir.count({
