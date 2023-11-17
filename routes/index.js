@@ -5,6 +5,7 @@ import {
   PenjagaLogin,
   LogOut,
   forgotPassword,
+  ResetPassword,
 } from "../controller/Penjaga";
 import { Hello, getAllKondisiAir } from "../controller/kondisiAir";
 import { verifyToken } from "../middleware/verifyToken";
@@ -17,6 +18,7 @@ router.get("/api/token", RefreshToken);
 router.post("/api/regist", RegisterPenjaga);
 router.post("/api/login", PenjagaLogin);
 router.post("/api/forgot-password", forgotPassword);
+router.post("/api/reset-password", ResetPassword);
 router.delete("/api/logout", LogOut);
 
 //KONDISI AIR

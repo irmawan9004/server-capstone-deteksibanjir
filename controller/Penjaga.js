@@ -101,18 +101,18 @@ export const forgotPassword = async (req, res) => {
     const { email } = req.body;
     // Find the user by email (replace with your user lookup logic)
     const penjaga = await Penjaga.findAll({ where: { email: email } });
-    console.log(email);
-    console.log(penjaga);
     if (penjaga) {
       // Create a JWT with the user's email
       const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "1h",
       });
+      console.log(token);
+
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
           user: "capstonekelompok17@gmail.com",
-          pass: "bismillahkelar",
+          pass: "ywyv ypgy gpnp jjhp",
         },
       });
 
@@ -121,8 +121,8 @@ export const forgotPassword = async (req, res) => {
         const mailOptions = {
           from: "capstonekelompok17@gmail.com",
           to: email,
-          subject: "Magic Link for Password Reset",
-          text: `Click the following link to reset your password: http://localhost:8000/reset-password/${token}`,
+          subject: "Link Lupa Kata Sandi Anda",
+          text: `Click the following link to reset your password: http://localhost:3000/forgot-password/${token}`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -136,11 +136,53 @@ export const forgotPassword = async (req, res) => {
       // Send the magic link email
       sendMagicLinkEmail(email, token);
 
-      res.json({ success: true, message: "Magic link sent to your email." });
+      res.json({
+        success: true,
+        message: "Link lupa kata sandi terkirim, cek email anda !",
+      });
     } else {
       res.status(403).json({ success: false, message: "User not found." });
     }
   } catch (error) {
-    res.status(401).json({ msg: "Error" });
+    res.status(403).json({ msg: "Email tidak ditemukan" });
+  }
+};
+
+export const ResetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log(decoded);
+
+    // Check if the token is associated with a valid user
+    const penjaga = await Penjaga.findOne({
+      where: {
+        email: decoded.email,
+      },
+    });
+
+    if (!penjaga) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid or expired token" });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the user's password and clear the reset token
+    await penjaga.update({
+      password: hashedPassword,
+      resetToken: null,
+      resetTokenExpiry: null,
+    });
+
+    res.json({ success: true, message: "Password reset successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
