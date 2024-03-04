@@ -1,20 +1,19 @@
 import jwt from "jsonwebtoken";
-import Penjaga from "../model/penjagaModel";
+import User from "../model/userModel";
+import userRole from "../model/userRoles";
 
 export const RefreshToken = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
-    console.log(refreshToken);
-    console.log("hello");
     console.log(process.env.REFRESH_TOKEN_SECRET);
     if (!refreshToken) return res.sendStatus(403);
-    const penjaga = await Penjaga.findAll({
+    const userrole = await userRole.findAll({
       where: {
         refresh_token: refreshToken,
       },
     });
     // console.log(penjaga);
-    if (!penjaga[0]) return res.sendStatus(403);
+    if (!userrole[0]) return res.sendStatus(403);
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
@@ -22,13 +21,13 @@ export const RefreshToken = async (req, res) => {
         if (err) {
           return res.sendStatus(403);
         }
-        const userId = penjaga[0].id;
-        const name = penjaga[0].name;
-        const email = penjaga[0].email;
+        const userId = userrole[0].id;
+        const name = userrole[0].name;
+        const email = userrole[0].email;
         const accessToken = jwt.sign(
           { userId, name, email },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "15s" }
+          { expiresIn: "1d" }
         );
         res.json({ accessToken });
       }

@@ -3,8 +3,8 @@ import db from "../config/connection.js";
 
 const { DataTypes } = Sequelize; // Import the built-in data types
 
-const Penjaga = db.define(
-  "penjaga",
+const User = db.define(
+  "user",
   {
     name: {
       type: DataTypes.STRING,
@@ -16,7 +16,6 @@ const Penjaga = db.define(
     password: {
       type: DataTypes.STRING,
     },
-
     refresh_token: {
       type: DataTypes.TEXT,
     },
@@ -24,4 +23,4 @@ const Penjaga = db.define(
   { freezeTableName: true }
 );
 
-export default Penjaga;
+export default User;

@@ -1,7 +1,6 @@
 {
   "name": "server-capstone-deteksibanjir",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -29,5 +28,15 @@
     "nodemon": "^3.0.1",
     "sequelize": "^6.33.0",
     "serverless-http": "^3.2.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irmawan9004/server-capstone-deteksibanjir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/irmawan9004/server-capstone-deteksibanjir/issues"
+  },
+  "homepage": "https://github.com/irmawan9004/server-capstone-deteksibanjir#readme",
+  "description": ""
 }
