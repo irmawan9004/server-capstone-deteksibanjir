@@ -43,10 +43,7 @@ export const RegisterPenjaga = async (req, res) => {
 export const PenjagaLogin = async (req, res) => {
   try {
     const penjaga = await Penjaga.findAll({ where: { email: req.body.email } });
-    // console.log(penjaga);
     const match = await bcrypt.compare(req.body.password, penjaga[0].password);
-    // console.log(req.body.password);
-    // console.log(penjaga[0].password);
     if (!match) {
       return res.status(401).json({ msg: "Password salah" });
     }
